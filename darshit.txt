@@ -1,0 +1,299 @@
+17.	WAP to demonstrate the use of package.
+
+JAVA FILE A:
+
+package pack1;
+public class A
+{
+	private int pri_a;
+	int def_a;
+	protected int pro_a;
+	public int pub_a;
+	
+	public A()
+	{
+		System.out.println("A() is called");
+		pri_a = 10;
+		def_a = 20;	
+		pro_a = 30;
+		pub_a =50;
+	}
+	public void show()
+	{
+		System.out.println("PRIVATE A : " + pri_a);
+		System.out.println("DEFAULT A : " + def_a);
+		System.out.println("PROTECTED A : " + pro_a);
+		System.out.println("PUBLIC A : " + pub_a);
+	}	
+}
+
+JAVA FILE B:
+package pack1;
+public class B extends A
+{
+	public B()
+	{
+		System.out.println("B() is called");
+	}
+	public void showB()
+	{
+		//System.out.println("PRIVATE A : " + pri_a);
+		System.out.println("DEFAULT A : " + def_a);
+		System.out.println("PROTECTED A : " + pro_a);
+		System.out.println("PUBLIC A : " + pub_a);
+	}
+}
+
+JAVA FILE C:
+package pack1;
+import pack1.A;
+public class C
+{
+	A a1;
+	public C()
+	{
+		a1 = new A();
+		System.out.println("C() is called");
+	}
+	
+public void showC()
+	{
+		//System.out.println("PRIVATE A : " + a1.pri_a);
+		System.out.println("DEFAULT A : " + a1.def_a);
+		System.out.println("PROTECTED A : " + a1.pro_a);
+		System.out.println("PUBLIC A : " + a1.pub_a);
+	}
+}
+JAVA FILE D:
+package pack2;
+import pack1.*;
+public class D extends A
+{
+	public D()
+	{
+		System.out.println("D() is called");	
+	}
+	public void showD()
+	{
+		//System.out.println("PRIVATE A : " + pri_a);
+		//System.out.println("DEFAULT A : " + def_a);
+		System.out.println("PROTECTED A : " + pro_a);
+		System.out.println("PUBLIC A : " + pub_a);
+	}
+}
+
+JAVA FILE E:
+package pack2;
+import pack1.A;
+public class E
+{
+	A a1;
+	public E()
+	{
+		a1 = new A();
+		System.out.println("E() is called");
+	}
+	public void showE()
+	{
+		//System.out.println("PRIVATE A : " + a1.pri_a);
+		//System.out.println("DEFAULT A : " + a1.def_a);
+		//System.out.println("PROTECTED A : " + a1.pro_a);
+		System.out.println("PUBLIC A : " + a1.pub_a);
+	}	
+}
+
+JAVA FILE PackDemo1:
+package pack1;
+import pack1.*;
+import pack2.*;
+class PackDemo1
+{
+	public static void main(String args[])
+	{
+		A a1 = new A();
+		a1.show();
+
+		B b1 = new B();
+		b1.showB();
+
+		C c1 = new C();
+		c1.showC();
+
+		//D d1 = new D();
+		//d1.showD();		
+		
+		//E e1 = new E();
+		//e1.showE();
+	}
+}
+
+
+
+
+
+
+
+18.	WAP to demonstrate use of create two thread using thread class.
+class A extends Thread
+{
+	public void run()
+	{
+		for(int i=1;i<=10;i++)
+		{
+			if(i%2==0)
+			{
+			System.out.println(i+"is even number");
+			}		
+		}
+	}
+}
+class B extends Thread
+{
+	public void run()
+	{
+		for(int i=1;i<=10;i++)
+		{
+			if(i%2!=0)
+			{
+			System.out.println(i+"is odd number");
+			}		
+		}
+	}
+}
+class MainThread
+{
+	public static void main(String args[])
+	{
+		A obj1=new A();
+		B obj2=new B();
+		Thread t1=new Thread(obj1,"child1");
+		Thread t2=new Thread(obj2,"child2");
+		t1.start();
+		t2.start();
+	}
+}
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+19.	 WAP to demonstrate the use of methods of Thread class.
+
+import java.lang.*;
+class ThreadDemo
+{
+	public static void main(String[] args)  throws Exception
+	{
+		Thread t = Thread.currentThread();
+		// prints the thread name
+		System.out.println("Thread = " + t);
+		
+		t.setName("Admin Thread");
+		// prints the thread after changing name
+		System.out.println("Thread after changing name = " + t);
+		int count = Thread.activeCount();
+		System.out.println("currently active threads = " + count);
+		for(int i=1;i<=5;i++)
+		{
+			try
+			{
+				System.out.println(i);
+				Thread.sleep(1000);
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+20.	WAP to Synchronized Thread
+class Table
+{  
+	synchronized void printTable(int n)
+	{	//synchronized method  
+		for(int i=1;i<=5;i++)
+		{  
+			System.out.println(n*i);  
+			try
+			{  
+				Thread.sleep(400);  
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}  
+		}  
+	}  
+}  
+class MyThread1 extends Thread
+{  
+	Table t;  
+	MyThread1(Table t)
+	{  
+		this.t=t;  
+	}  
+	public void run()
+	{  
+		t.printTable(5);  
+	}  
+}  
+class MyThread2 extends Thread
+{  
+	Table t;  
+	MyThread2(Table t)
+	{  
+		this.t=t;  
+	}  
+	public void run()
+	{  
+		t.printTable(100);  
+	}  
+}  
+public class sync
+{  
+	public static void main(String args[])
+	{  
+		Table obj = new Table();//only one object  
+		MyThread1 t1=new MyThread1(obj);  
+		MyThread2 t2=new MyThread2(obj);  
+		t1.start();  
+		t2.start();  
+	}  
+}  
+
+
+
+
+
+
+
+
+
